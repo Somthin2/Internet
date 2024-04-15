@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+    Home
+
+{% endblock %}
+
+
+{% block main %}
+
+<!--
+  <form action="/search" method="post">
+      <div class="row justify-content-center" style="align-items: center; padding-top: 300px;">
+          <div class="d-flex">
+              <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" name="card" placeholder="Dark Magician" style = "height: 50px;width: 300px;">
+                  <label for="floatingInput">Enter Card</label>
+              </div>
+              <button type="submit" class="btn btn-primary mb-3" style="height: 50px; width: 200px; margin-left: 10px;">Search</button>
+          </div>
+      </div>
+  </form>
+-->
+
+{% if files != null %}
+
+<div class="d-flex flex-wrap">
+  {% for file in files %}
+    <img src="{{ file }}" alt="Card image" class="rounded mx-auto" style="height: 200px; width: 150px;">
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
