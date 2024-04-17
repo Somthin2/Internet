@@ -22,13 +22,48 @@
       </div>
   </form>
 -->
+<style>
+  .image-text-container {
+    display: flex;
+    align-items: center; /* Center vertically */
+  }
+
+  .image-container {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 40px;
+  }
+
+  .text-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 5px;
+    flex: 1; /* Take up remaining space */
+    width: 550px; height: 800px;
+  }
+</style>
 
 {% if files != null %}
 
-<div class="d-flex flex-wrap">
-  {% for file in files %}
-    <img src="{{ file }}" alt="Card image" class="rounded mx-auto" style="height: 200px; width: 150px;">
-  {% endfor %}
+<div class="image-text-container">
+
+  <div class="image-container">
+
+    <img src="{{ files['Image'] }}" alt="Card image" style="width: 550px; height: 800px;">
+
+  </div>
+
+  <div class="text-container">
+
+    <h2>{{ files['Name'] }}</h2>
+
+    <p>{{files['Type']}}/{{files['Attribute']}}/{{files['Level']}}</p>
+    <p>{{files['Desc']}}</p>
+    <p>Price : $ {{files['Price']}}</p>
+
+  </div>
+
 </div>
+
 {% endif %}
 {% endblock %}
