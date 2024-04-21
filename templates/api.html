@@ -9,37 +9,39 @@
 
 {% block main %}
 
-<!--
-  <form action="/search" method="post">
-      <div class="row justify-content-center" style="align-items: center; padding-top: 300px;">
-          <div class="d-flex">
-              <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="floatingInput" name="card" placeholder="Dark Magician" style = "height: 50px;width: 300px;">
-                  <label for="floatingInput">Enter Card</label>
-              </div>
-              <button type="submit" class="btn btn-primary mb-3" style="height: 50px; width: 200px; margin-left: 10px;">Search</button>
-          </div>
-      </div>
-  </form>
--->
+
 <style>
   .image-text-container {
     display: flex;
-    align-items: center; /* Center vertically */
+    align-items: stretch; /* Make items the same height */
   }
 
   .image-container {
+    display: flex;
+    flex-direction: column; /* Stack image and button vertically */
+    align-items: stretch; /* Make items the same width */
     margin-right: 20px;
     margin-left: 20px;
     margin-top: 40px;
   }
 
+  .image-container img {
+    width: 100%; /* Make image take up full width of .image-container */
+    height: auto; /* Let image height adjust automatically */
+  }
+
+  .image-container button {
+    width: 100%; /* Make button take up full width of .image-container */
+  }
+
   .text-container {
-    background-color: #f0f0f0;
+    background-color: darkgray;
     padding: 20px;
     border-radius: 5px;
-    flex: 1; /* Take up remaining space */
-    width: 550px; height: 800px;
+    flex-grow: 1; /* Let .text-container take up remaining space */
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 40px;
   }
 </style>
 
@@ -49,7 +51,11 @@
 
   <div class="image-container">
 
-    <img src="{{ files['Image'] }}" alt="Card image" style="width: 550px; height: 800px;">
+    <img src="{{ files['Image'] }}" alt="Card image" style="padding-bottom: 5px;position: initial">
+
+    {% if session["user_id"] != null %}
+    <button type="submit" style="color: rgb(0,0,0)  ;opacity:0.65; background-blend-mode: inherit;">Add Card to List</button>
+    {% endif %}
 
   </div>
 
@@ -57,7 +63,7 @@
 
     <h2>{{ files['Name'] }}</h2>
 
-    <p>{{files['Type']}}/{{files['Attribute']}}/{{files['Level']}}</p>
+    <p>{{files['Type']}} {% if files['Attribute'] != None %} / {{files['Attribute'] }} {% endif %}</p>
     <p>{{files['Desc']}}</p>
     <p>Price : $ {{files['Price']}}</p>
 
