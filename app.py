@@ -7,7 +7,7 @@ import requests
 import json
 import firebase_admin
 from firebase_admin import credentials, db, firestore
-from helpers import apology, login_required, reg_required
+from helpers import apology
 
 app = Flask(__name__)
 
@@ -19,6 +19,7 @@ cred = credentials.Certificate("static/yugioh-database-539a5-firebase-adminsdk-3
 firebase_admin.initialize_app(cred)
 db_firestore = firestore.client()
 
+json_file = None
 @app.route('/')
 def home():
   if not session:
@@ -148,8 +149,7 @@ def Register():
       return apology("passwords do not match")
 
     hash = generate_password_hash(password)
-    print(hash)
-    db_firestore.collection("users").add({"username": username, "hash": hash[0]})
+    db_firestore.collection("users").add({"username": username, "hash": hash})
 
     # Query database for username
     rows = (
@@ -170,6 +170,27 @@ def LogOut():
 
   session.clear()
   return redirect("/")
+
+
+@app.route("/GetCards", methods=["POST"])
+def GetCards():
+
+  global json_file
+  if json_file == None:
+    url = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
+
+    response = requests.get(url)
+    if response.status_code == 200:
+      json_file = response.json()
+      return jsonify('success', json_file)
+    return jsonify('')
+  else:
+    return jsonify('success',json_file)
+
+@app.route("/Duel", methods=["GET","POST"])
+def Duel():
+
+  return render_template("Duel.html")
 
 if __name__ == '__main__':
   app.run(port=3000)

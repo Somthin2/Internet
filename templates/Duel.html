@@ -1,0 +1,271 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Duel
+{% endblock %}
+
+{% block main %}
+
+<style>
+  .calculator-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px; /* Adjusted margin to move the calculators down */
+  }
+
+  .calculator {
+    width: 400px; /* Increased calculator width */
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #display1, #display2 {
+      display: block;
+      font-size: 36px; /* Increased font size for the labels */
+      margin-bottom: 20px; /* Increased margin bottom for spacing */
+      padding: 10px; /* Increased padding for better visibility */
+  }
+
+  .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 5px;
+  }
+
+  button {
+      width: 100px; /* Increased button width */
+      height: 70px; /* Increased button height */
+      font-size: 24px; /* Increased font size */
+  }
+
+  .number {
+      background-color: lightgray;
+  }
+
+  .symbol {
+      background-color: lightblue;
+  }
+
+  #clear, #equals {
+      grid-column: span 2;
+  }
+
+</style>
+
+<div class="calculator-container">
+    <div class="calculator" id="calculator1">
+        <label id="display1">8000</label>
+        <div class="buttons">
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button class="symbol">+</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="symbol">-</button>
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="symbol">*</button>
+            <button class="symbol">/</button>
+            <button class="number">0</button>
+            <button id="clear1">C</button>
+            <button id="equals1">=</button>
+        </div>
+    </div>
+
+    <div class="calculator" id="calculator2">
+        <label id="display2">8000</label>
+        <div class="buttons">
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button class="symbol">+</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button class="symbol">-</button>
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button class="symbol">*</button>
+            <button class="symbol">/</button>
+            <button class="number">0</button>
+            <button id="clear2">C</button>
+            <button id="equals2">=</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Calculator 1
+    const display1 = document.getElementById('display1');
+    let currentNumber1 = '8000';
+    let operator1 = '';
+    let previousNumber1 = '';
+    let shouldClear1 = false;
+
+    function updateDisplay1() {
+        display1.textContent = currentNumber1;
+    }
+
+    function clearDisplay1() {
+        currentNumber1 = '8000';
+        operator1 = '';
+        previousNumber1 = '';
+        updateDisplay1();
+    }
+
+    function calculate1() {
+        let result;
+        const num1 = parseFloat(previousNumber1);
+        const num2 = parseFloat(currentNumber1);
+        switch (operator1) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                result = num1 / num2;
+                break;
+            default:
+                return;
+        }
+
+        if (result <= 0)
+        {
+          window.alert("Player 2 Won !")
+          clearDisplay2();
+          clearDisplay1();
+          return;
+        }
+
+        currentNumber1 = result.toString();
+        previousNumber1 = '';
+        operator1 = '';
+        updateDisplay1();
+    }
+
+    document.querySelectorAll('#calculator1 .number').forEach(button => {
+        button.addEventListener('click', () => {
+            if (currentNumber1 === '8000' || shouldClear1) {
+                currentNumber1 = button.textContent;
+                shouldClear1 = false;
+            } else {
+                currentNumber1 += button.textContent;
+            }
+            updateDisplay1();
+        });
+    });
+
+    document.querySelectorAll('#calculator1 .symbol').forEach(button => {
+        button.addEventListener('click', () => {
+            if (operator1 === '') {
+                previousNumber1 = currentNumber1;
+                operator1 = button.textContent;
+                shouldClear1 = true;
+            } else {
+                calculate1();
+                operator1 = button.textContent;
+                shouldClear1 = true;
+            }
+        });
+    });
+
+    document.getElementById('clear1').addEventListener('click', clearDisplay1);
+
+    document.getElementById('equals1').addEventListener('click', () => {
+        calculate1();
+    });
+
+    // Calculator 2
+    const display2 = document.getElementById('display2');
+    let currentNumber2 = '8000';
+    let operator2 = '';
+    let previousNumber2 = '';
+    let shouldClear2 = false;
+
+    function updateDisplay2() {
+        display2.textContent = currentNumber2;
+    }
+
+    function clearDisplay2() {
+        currentNumber2 = '8000';
+        operator2 = '';
+        previousNumber2 = '';
+        updateDisplay2();
+    }
+
+    function calculate2() {
+        let result;
+        const num1 = parseFloat(previousNumber2);
+        const num2 = parseFloat(currentNumber2);
+        switch (operator2) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                result = num1 / num2;
+                break;
+            default:
+                return;
+        }
+        if (result <= 0)
+        {
+          window.alert("Player 2 Won !")
+          clearDisplay2();
+          clearDisplay1();
+          return;
+        }
+        currentNumber2 = result.toString();
+        previousNumber2 = '';
+        operator2 = '';
+        updateDisplay2();
+    }
+
+    document.querySelectorAll('#calculator2 .number').forEach(button => {
+        button.addEventListener('click', () => {
+            if (currentNumber2 === '8000' || shouldClear2) {
+                currentNumber2 = button.textContent;
+                shouldClear2 = false;
+            } else {
+                currentNumber2 += button.textContent;
+            }
+            updateDisplay2();
+        });
+    });
+
+    document.querySelectorAll('#calculator2 .symbol').forEach(button => {
+        button.addEventListener('click', () => {
+            if (operator2 === '') {
+                previousNumber2 = currentNumber2;
+                operator2 = button.textContent;
+                shouldClear2 = true;
+            } else {
+                calculate2();
+                operator2 = button.textContent;
+                shouldClear2 = true;
+            }
+        });
+    });
+
+    document.getElementById('clear2').addEventListener('click', clearDisplay2);
+
+    document.getElementById('equals2').addEventListener('click', () => {
+        calculate2();
+    });
+</script>
+
+{% endblock %}

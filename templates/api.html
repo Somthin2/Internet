@@ -1,75 +1,83 @@
 {% extends "layout.html" %}
 
 {% block title %}
-
     Home
-
 {% endblock %}
 
-
 {% block main %}
-
-
 <style>
+  /* Container for image and text */
   .image-text-container {
     display: flex;
-    align-items: stretch; /* Make items the same height */
+    margin: 20px;
   }
 
+  /* Container for image */
   .image-container {
-    display: flex;
-    flex-direction: column; /* Stack image and button vertically */
-    align-items: stretch; /* Make items the same width */
+    flex: 1; /* Take up equal space */
     margin-right: 20px;
-    margin-left: 20px;
-    margin-top: 40px;
+    max-width: 200px; /* Limit max width */
+    position: relative; /* Make container relative for absolute positioning of button */
   }
 
+  /* Image */
   .image-container img {
-    width: 100%; /* Make image take up full width of .image-container */
-    height: auto; /* Let image height adjust automatically */
+    width: 100%;
+    height: auto;
   }
 
+  /* Button */
   .image-container button {
-    width: 100%; /* Make button take up full width of .image-container */
+    position: absolute; /* Position button absolute */
+    bottom: -30px; /* Space from bottom */
+    left: 0; /* Align with left edge of container */
+    width: 100%; /* Make button same width as container */
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.65); /* White with opacity */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
 
+  /* Button hover effect */
+  .image-container button:hover {
+    background-color: rgba(255, 255, 255, 0.85); /* Lighter background on hover */
+  }
+
+  /* Container for text */
   .text-container {
-    background-color: darkgray;
+    flex: 1; /* Take up equal space */
+    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 5px;
-    flex-grow: 1; /* Let .text-container take up remaining space */
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-top: 40px;
+  }
+
+  /* Heading */
+  .text-container h2 {
+    margin-top: 0; /* Remove default margin */
+    margin-bottom: 10px; /* Add some space below heading */
+  }
+
+  /* Price */
+  .text-container p:last-child {
+    margin-bottom: 0; /* Remove extra margin */
   }
 </style>
 
 {% if files != null %}
-
 <div class="image-text-container">
-
   <div class="image-container">
-
-    <img src="{{ files['Image'] }}" alt="Card image" style="padding-bottom: 5px;position: initial">
-
+    <img src="{{ files['Image'] }}" alt="Card image">
     {% if session["user_id"] != null %}
-    <button type="submit" style="color: rgb(0,0,0)  ;opacity:0.65; background-blend-mode: inherit;">Add Card to List</button>
+    <button type="submit">Add to List</button>
     {% endif %}
-
   </div>
-
   <div class="text-container">
-
     <h2>{{ files['Name'] }}</h2>
-
-    <p>{{files['Type']}} {% if files['Attribute'] != None %} / {{files['Attribute'] }} {% endif %}</p>
-    <p>{{files['Desc']}}</p>
-    <p>Price : $ {{files['Price']}}</p>
-
+    <p>{{ files['Type'] }} {% if files['Attribute'] %}/ {{ files['Attribute'] }}{% endif %}</p>
+    <p>{{ files['Desc'] }}</p>
+    <p>Price: ${{ files['Price'] }}</p>
   </div>
-
 </div>
-
 {% endif %}
 {% endblock %}
