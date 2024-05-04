@@ -196,5 +196,13 @@ def Duel():
 def MoreThingsForProject():
   return render_template("MoreThings.html")
 
+@app.route("/DeleteFacebook", methods=["GET","POST"])
+def DeleteFacebook():
+  return render_template("deleteFacebook.html")
+
+@app.route("/PrivacyPolicy", methods=["GET","POST"])
+def PrivatePolicy():
+  return render_template("privacyPolicy.html")
+
 if __name__ == '__main__':
   app.run(port=3000)

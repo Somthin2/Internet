@@ -4,140 +4,151 @@
 
 {% block main %}
 
+<!-- CSS styles -->
 <style>
   * {box-sizing: border-box}
 
-/* Full-width input fields */
+  /* Full-width input fields */
   input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-button {
-  background-color: #146ed2;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-button:hover {
-  opacity:1;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-  padding: 14px 20px;
-  background-color: #ffffff;
-  color: black;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
-  float: left;
-  width: 50%;
-}
-
-/* Add padding to container elements */
-.container {
-  padding: 16px;
-}
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .signupbtn {
     width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
   }
-}
+
+  input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  /* Set a style for all buttons */
+  button {
+    background-color: #146ed2;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+
+  button:hover {
+    opacity:1;
+  }
+
+  /* Extra styles for the cancel button */
+  .cancelbtn {
+    padding: 14px 20px;
+    background-color: #ffffff;
+    color: black;
+  }
+
+  /* Float cancel and signup buttons and add an equal width */
+  .cancelbtn, .signupbtn {
+    float: left;
+    width: 50%;
+  }
+
+  /* Add padding to container elements */
+  .container {
+    padding: 16px;
+  }
+
+  /* Clear floats */
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  /* Change styles for cancel button and signup button on extra small screens */
+  @media screen and (max-width: 300px) {
+    .cancelbtn, .signupbtn {
+      width: 100%;
+    }
+  }
 </style>
+
+<!-- JavaScript functions -->
 <script>
-  function goBack()
-  {
-    window.history.go(-1)
+  // Function to navigate back
+  function goBack() {
+    window.history.go(-1);
   }
 
+  // Facebook SDK initialization
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: '3678923479004024',
+      xfbml: true,
+      version: 'v19.0'
+    });
+
+    // Check login status
+    FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        console.log('Logged in.');
+        // Fetch user's information
+        FB.api('/me', { fields: 'name, email' }, function(response) {
+          document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". I see your email address is " + response.email;
+        });
+      } else {
+        console.log('Not logged in.');
+      }
+    });
+
+    // Add a data deletion callback
+    FB.Event.subscribe('auth.authResponseChange', function(response) {
+      if (response.status === 'not_authorized' || response.status === 'unknown') {
+        // User has removed the app or revoked permissions
+        // Perform necessary cleanup or data deletion here
+        console.log('User has removed the app or revoked permissions.');
+        document.getElementById("profile").innerHTML = "";
+      }
+    });
+  };
+
+  // Load Facebook SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 </script>
-   <form action="/Login" style="border:1px solid #ccc" method="post">
-    <div class="container">
-      <h1>Log In</h1>
-      <p>Please fill in this form to Login to your account.</p>
-      <hr>
 
-      <label id="username"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="username" required>
+<!-- Login form -->
+<form action="/Login" style="border:1px solid #ccc" method="post">
+  <div class="container">
+    <h1>Log In</h1>
+    <p>Please fill in this form to login to your account.</p>
+    <hr>
 
-      <label id="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+    <label id="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required>
 
-      <div class="clearfix">
-        <button type="button" onclick="goBack()" class="cancelbtn">Cancel</button>
-        <button type="submit" class="signupbtn">Log In</button>
-      </div>
+    <label id="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <div class="clearfix">
+      <button type="button" onclick="goBack()" class="cancelbtn">Cancel</button>
+      <button type="submit" class="signupbtn">Log In</button>
     </div>
-  </form>
-<p id="profile"></p>
+  </div>
+</form>
 
-      <script>
-
-
-        (function(d, s, id){
-                              var js, fjs = d.getElementsByTagName(s)[0];
-                              if (d.getElementById(id)) {return;}
-                              js = d.createElement(s); js.id = id;
-                              js.src = "https://connect.facebook.net/en_US/sdk.js";
-                              fjs.parentNode.insertBefore(js, fjs);
-                            }(document, 'script', 'facebook-jssdk')
-        );
-
-
-        window.fbAsyncInit = function() {
-            <!-- Initialize the SDK with your app and the Graph API version for your app -->
-            FB.init({
-                      appId            : '{3678923479004024}',
-                      xfbml            : true,
-                      version          : '{v19.0}'
-                    });
-            FB.login(function(response) {
-                      if (response.authResponse) {
-                           console.log('Welcome!  Fetching your information.... ');
-                           FB.api('/me', {fields: 'name, email'}, function(response) {
-                               document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
-                           });
-                      } else {
-                           <!-- If you are not logged in, the login dialog will open for you to login asking for permission to get your public profile and email -->
-                           console.log('User cancelled login or did not fully authorize.'); }
-            });
-        };
-
-      </script>
-
+<!-- Facebook login button and profile display -->
 <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v19.0&appId=3678923479004024" nonce="XV3u6vuK"></script>
 <div class="fb-login-button" data-width="200" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="false"></div>
+<p id="profile"></p>
 
 {% endblock %}
