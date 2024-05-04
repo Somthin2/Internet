@@ -16,7 +16,7 @@
   .image-container {
     flex: 1; /* Take up equal space */
     margin-right: 20px;
-    max-width: 200px; /* Limit max width */
+    max-width: 350px; /* Limit max width */
     position: relative; /* Make container relative for absolute positioning of button */
   }
 
@@ -24,15 +24,15 @@
   .image-container img {
     width: 100%;
     height: auto;
+    padding-bottom: 8px;
   }
 
   /* Button */
   .image-container button {
-    position: absolute; /* Position button absolute */
-    bottom: -30px; /* Space from bottom */
+    position: initial; /* Position button absolute */
     left: 0; /* Align with left edge of container */
     width: 100%; /* Make button same width as container */
-    padding: 8px;
+    padding-top: 8px;
     background-color: rgba(255, 255, 255, 0.65); /* White with opacity */
     border: none;
     cursor: pointer;

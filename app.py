@@ -192,5 +192,9 @@ def Duel():
 
   return render_template("Duel.html")
 
+@app.route("/MoreThingsForProject", methods=["GET","POST"])
+def MoreThingsForProject():
+  return render_template("MoreThings.html")
+
 if __name__ == '__main__':
   app.run(port=3000)

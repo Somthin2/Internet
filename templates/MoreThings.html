@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %} More Things For the Project {% endblock %}
+
+{% block main %}
+<style>
+  .container {
+    border: 5px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; /* Add padding for better spacing */
+    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/001/849/553/small/modern-gold-background-free-vector.jpg'); /* Add background image */
+    background-size: cover; /* Make sure the background covers the entire container */
+    color: white; /* Set text color to white for better visibility */
+  }
+
+  /* Style the video containers */
+  .video-container {
+    margin: 20px; /* Add margin for spacing between videos */
+  }
+
+</style>
+<div style="padding-top: 100px;"></div>
+<div class="container">
+    <!-- Real-time video -->
+    <div class="video-container">
+        <h2>Real-time Video</h2>
+        <video width="560" height="315" controls>
+            <source src="../static/Me%20at%20the%20zoo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- YouTube video -->
+    <div class="video-container">
+        <h2>YouTube Video</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+
+<div class="container" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyBAgrmOSxDdAxGneXatGYvjdMI5OjAS-zCJASzsj4GQ&s');"> <!-- Add cascaded background image -->
+    Cascaded Content
+</div>
+{% endblock %}
