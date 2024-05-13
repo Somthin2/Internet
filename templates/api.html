@@ -9,13 +9,13 @@
   /* Container for image and text */
   .image-text-container {
     display: flex;
+    flex-direction: column;
     margin: 20px;
   }
 
   /* Container for image */
   .image-container {
-    flex: 1; /* Take up equal space */
-    margin-right: 20px;
+    margin-bottom: 20px;
     max-width: 350px; /* Limit max width */
     position: relative; /* Make container relative for absolute positioning of button */
   }
@@ -29,8 +29,6 @@
 
   /* Button */
   .image-container button {
-    position: initial; /* Position button absolute */
-    left: 0; /* Align with left edge of container */
     width: 100%; /* Make button same width as container */
     padding-top: 8px;
     background-color: rgba(255, 255, 255, 0.65); /* White with opacity */
@@ -46,7 +44,6 @@
 
   /* Container for text */
   .text-container {
-    flex: 1; /* Take up equal space */
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 5px;
@@ -60,7 +57,18 @@
 
   /* Price */
   .text-container p:last-child {
-    margin-bottom: 0; /* Remove extra margin */
+    margin-bottom: 0;
+  }
+
+  /* Responsive styles */
+  @media (min-width: 768px) {
+    .image-text-container {
+      flex-direction: row;
+    }
+
+    .image-container {
+      margin-right: 20px;
+    }
   }
 </style>
 

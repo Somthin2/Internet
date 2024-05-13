@@ -27,38 +27,37 @@
     background-image: url("../static/img/wallpaperflare.com_wallpaper.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+  }
 
-}
+  .navbar {
+    opacity: 0.75;
+    background-size: cover;
+  }
 
-      ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            display: inline-block;
-            margin: 10px;
-        }
+  #Card_Database option {
+    background-color: #f4f4f4;
+    padding: 5px 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+  }
 
-      .navbar {
-            opacity: 0.75;
-            background-size: cover;
-          }
+  #Card_Database option:checked {
+    background-color: #ddd;
+  }
 
-      {
-        display: none;
-      }
+  .nav-item {
+    list-style-type: none;
+    display: inline-block;
+    margin: 10px;
+  }
 
-      #Card_Database option {
-        background-color: #f4f4f4; /* Background color */
-        padding: 5px 10px; /* Padding */
-        border-bottom: 1px solid #ccc; /* Bottom border */
-        cursor: pointer; /* Cursor style */
-      }
-
-      #Card_Database option:checked {
-        background-color: #ddd; /* Background color */
-      }
-
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .nav-item {
+      display: block;
+      margin: 5px 0;
+    }
+  }
 </style>
 <script>
   setInterval(GetTime, 1000);
@@ -119,8 +118,8 @@
       {% if session["user_id"] %}
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color : black;">
+            Menu
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/MoreThingsForProject">More Things</a></li>
@@ -128,7 +127,7 @@
             <li><a class="dropdown-item" href="/PrivacyPolicy">Privacy Policy</a></li>
 
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="/Facebook">Facebook</a></li>
           </ul>
         </li>
 

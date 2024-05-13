@@ -77,56 +77,6 @@
   }
 </style>
 
-<!-- JavaScript functions -->
-<script>
-  // Function to navigate back
-  function goBack() {
-    window.history.go(-1);
-  }
-
-  // Facebook SDK initialization
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId: '3678923479004024',
-      xfbml: true,
-      version: 'v19.0'
-    });
-
-    // Check login status
-    FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        console.log('Logged in.');
-        // Fetch user's information
-        FB.api('/me', { fields: 'name, email' }, function(response) {
-          document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". I see your email address is " + response.email;
-        });
-      } else {
-        console.log('Not logged in.');
-      }
-    });
-
-    // Add a data deletion callback
-    FB.Event.subscribe('auth.authResponseChange', function(response) {
-      if (response.status === 'not_authorized' || response.status === 'unknown') {
-        // User has removed the app or revoked permissions
-        // Perform necessary cleanup or data deletion here
-        console.log('User has removed the app or revoked permissions.');
-        document.getElementById("profile").innerHTML = "";
-      }
-    });
-  };
-
-  // Load Facebook SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-
-<!-- Login form -->
 <form action="/Login" style="border:1px solid #ccc" method="post">
   <div class="container">
     <h1>Log In</h1>
@@ -142,13 +92,9 @@
     <div class="clearfix">
       <button type="button" onclick="goBack()" class="cancelbtn">Cancel</button>
       <button type="submit" class="signupbtn">Log In</button>
+      <label> Or </label>
     </div>
   </div>
 </form>
-
-<!-- Facebook login button and profile display -->
-<div id="fb-root"></div>
-<div class="fb-login-button" data-width="200" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="false"></div>
-<p id="profile"></p>
 
 {% endblock %}

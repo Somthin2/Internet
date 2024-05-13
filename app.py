@@ -204,5 +204,9 @@ def DeleteFacebook():
 def PrivatePolicy():
   return render_template("privacyPolicy.html")
 
+@app.route("/Facebook", methods=["GET", "POST"])
+def Facebook():
+  return render_template("facebook.html")
+
 if __name__ == '__main__':
   app.run(port=3000)
